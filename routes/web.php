@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GeolicalizacionController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +29,7 @@ Route::get('/geolocalizacion', [GeolicalizacionController::class, 'index']);
 // Nueva ruta para obtener el detalle de una dirección geográfica por ID
 // Esta ruta es la que tu JavaScript en el Blade llamará.
 Route::get('/api/direcciones_geograficas/{id}', [GeolicalizacionController::class, 'showDireccionGeografica']);
+Route::get('/register', [RegisterController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index']);
+
+
