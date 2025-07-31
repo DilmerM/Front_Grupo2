@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log; // Importante para el logging
 
-class GeolicalizacionController extends Controller
+class GeolocalizacionController extends Controller
 {
     /**
      * Muestra una lista de recursos.

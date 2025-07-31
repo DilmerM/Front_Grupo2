@@ -1,35 +1,46 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GeolicalizacionController;
+use App\Http\Controllers\GeolocalizacionController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-
+use App\Http\Controllers\LandingPageController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| Aquí se registran las rutas web para tu aplicación.
 |
 */
 
-// Ruta principal que carga la vista de geolocalización
-Route::get('/', function () {
-    return view('geolocalizacion');
-});
 
-// Ruta para obtener el listado de geolocalizaciones (si tu GeolocalizacionController::index
-// está diseñado para esto). Se mantiene la ruta '/geolocalizacion' para este propósito.
-Route::get('/geolocalizacion', [GeolicalizacionController::class, 'index']);
+// --- RUTAS PÚBLICAS ---
 
-// Nueva ruta para obtener el detalle de una dirección geográfica por ID
-// Esta ruta es la que tu JavaScript en el Blade llamará.
-Route::get('/api/direcciones_geograficas/{id}', [GeolicalizacionController::class, 'showDireccionGeografica']);
-Route::get('/register', [RegisterController::class, 'index']);
-Route::get('/login', [LoginController::class, 'index']);
+// Ruta Raíz ('/'): AHORA MUESTRA LA LANDING PAGE.
+// Esta será la primera página que vean los usuarios.
+Route::get('/', [LandingPageController::class, 'index'])->name('landing.index');
 
+// Ruta para MOSTRAR el formulario de login.
+// El botón de la landing page apuntará aquí.
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+
+// Ruta para MOSTRAR el formulario de registro.
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
+
+
+// --- RUTAS PROTEGIDAS O DE LA APLICACIÓN ---
+// Estas son las rutas a las que el usuario accederá después de iniciar sesión.
+// En un futuro, se protegerían con un "middleware" de autenticación.
+
+// Ruta principal de la aplicación después del login.
+Route::get('/geolocalizacion', [GeolocalizacionController::class, 'index'])->name('geolocalizacion');
+
+
+// --- RUTAS DE API ---
+// Estas rutas son para que tu frontend obtenga datos del backend.
+
+// Ruta para obtener el detalle de una dirección geográfica por ID.
+Route::get('/api/direcciones_geograficas/{id}', [GeolocalizacionController::class, 'showDireccionGeografica']);
 
